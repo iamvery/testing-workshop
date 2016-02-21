@@ -4,7 +4,8 @@ class LinksController < ApplicationController
   end
 
   def create
-    Link.create!(link_params)
+    link = Link.create!(link_params)
+    broadcast_create(link)
     redirect_to links_path
   end
 
@@ -22,5 +23,11 @@ class LinksController < ApplicationController
 
   def link_params
     params.require(:link).permit(:url)
+  end
+
+  def broadcast_create(link)
+    # TODO extract job object
+    rendered_link = ApplicationController.render(partial: "links/link", locals: { link: link })
+    ActionCable.server.broadcast(LinksChannel::STREAM, link: { rendered: rendered_link })
   end
 end
