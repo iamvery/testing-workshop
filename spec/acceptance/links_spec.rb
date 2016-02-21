@@ -12,4 +12,15 @@ RSpec.describe "Links", type: :feature do
       expect(page).to have_content("google.com")
     end
   end
+
+  describe "creating link" do
+    it "adds the link to the index" do
+      visit links_path
+
+      fill_in "Url", with: "http://iamvery.com"
+      click_on "Create link"
+
+      expect(page).to have_content("iamvery.com")
+    end
+  end
 end

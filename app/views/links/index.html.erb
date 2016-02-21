@@ -1,3 +1,9 @@
+<%= form_for Link.new do |f| %>
+  <%= f.label :url %>
+  <%= f.url_field :url %>
+  <%= f.submit %>
+<% end %>
+
 <ul>
   <% @links.each do |link| %>
     <li><%= link_to link.url %></li>
