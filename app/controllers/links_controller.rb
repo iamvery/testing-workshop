@@ -28,6 +28,6 @@ class LinksController < ApplicationController
   def broadcast_create(link)
     # TODO extract job object
     rendered_link = ApplicationController.render(partial: "links/link", locals: { link: link })
-    ActionCable.server.broadcast(LinksChannel::STREAM, link: { rendered: rendered_link })
+    ActionCable.server.broadcast(LinksChannel::STREAM, action: :create, link: { rendered: rendered_link })
   end
 end

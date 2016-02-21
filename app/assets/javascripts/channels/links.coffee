@@ -10,7 +10,11 @@ App.links = App.cable.subscriptions.create "LinksChannel",
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
     console.log("received")
-    @addLink(data.link)
+    @process(data)
+
+  process: (data) ->
+    switch data.action
+      when "create" then @addLink(data.link)
 
   addLink: (link) ->
     $("ul").append(link.rendered)
