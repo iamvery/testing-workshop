@@ -12,6 +12,7 @@ class LinksController < ApplicationController
   def destroy
     link = Link.find(link_id)
     link.destroy!
+    broadcast_destroy(link)
     redirect_to links_path
   end
 
@@ -29,5 +30,9 @@ class LinksController < ApplicationController
     # TODO extract job object
     rendered_link = ApplicationController.render(partial: "links/link", locals: { link: link })
     ActionCable.server.broadcast(LinksChannel::STREAM, action: :create, link: { rendered: rendered_link })
+  end
+
+  def broadcast_destroy(link)
+    ActionCable.server.broadcast(LinksChannel::STREAM, action: :destroy, link: link)
   end
 end

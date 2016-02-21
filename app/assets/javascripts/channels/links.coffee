@@ -15,6 +15,10 @@ App.links = App.cable.subscriptions.create "LinksChannel",
   process: (data) ->
     switch data.action
       when "create" then @addLink(data.link)
+      when "destroy" then @removeLink(data.link)
 
   addLink: (link) ->
     $("ul").append(link.rendered)
+
+  removeLink: (link) ->
+    $("[data-link-id=#{link.id}]").remove()
