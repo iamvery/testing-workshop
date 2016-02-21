@@ -23,4 +23,16 @@ RSpec.describe "Links", type: :feature do
       expect(page).to have_content("iamvery.com")
     end
   end
+
+  describe "deleting link" do
+    it "removes the link from the index" do
+      Link.create!(url: "http://iamvery.com")
+
+      visit links_path
+
+      click_on "×"
+
+      expect(page).not_to have_content("iamvery.com")
+    end
+  end
 end

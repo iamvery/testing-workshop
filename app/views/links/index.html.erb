@@ -6,6 +6,9 @@
 
 <ul>
   <% @links.each do |link| %>
-    <li><%= link_to link.url %></li>
+    <li>
+      <%= link_to link.url %>
+      <%= link_to "×", link, method: :delete %>
+    </li>
   <% end %>
 </ul>
