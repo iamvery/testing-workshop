@@ -13,7 +13,7 @@ class LinksController < ApplicationController
     link = Link.find(link_id)
     link.destroy!
     broadcast_destroy(link)
-    redirect_to links_path
+    redirect_to action: :index, status: 303
   end
 
   private
