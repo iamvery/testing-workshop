@@ -18,7 +18,7 @@ RSpec.describe "Links", type: :feature do
       visit links_path
 
       fill_in "Url", with: "http://iamvery.com"
-      click_on "Create link"
+      click_on "Create Link"
 
       expect(page).to have_content("iamvery.com")
     end
