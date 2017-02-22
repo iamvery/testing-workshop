@@ -1,10 +1,18 @@
-<%= form_for Link.new, remote: true do |f| %>
-  <%= f.label :url %>
-  <%= f.url_field :url %>
-  <%= f.submit %>
-<% end %>
+<div class="pinster-wrapper">
+  <%= form_for Link.new, remote: true, html: { class: "form-inline" } do |f| %>
+    <div class="form-group">
+      <%= f.label :url, class: "sr-only" %>
+      <div class="input-group">
+        <div class="input-group-addon">URL</div>
+        <%= f.url_field :url, class: "form-control", placeholder: "https://http.cat" %>
+      </div>
+    </div>
 
-<ul>
+    <%= f.submit class: "btn btn-default" %>
+  <% end %>
+</div>
+
+<ul class="list-group">
   <% @links.each do |link| %>
     <%= render link %>
   <% end %>
