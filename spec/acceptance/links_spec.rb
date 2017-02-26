@@ -30,7 +30,7 @@ RSpec.describe "Links", type: :feature do
 
       visit links_path
 
-      click_on "×"
+      find("[data-role=delete-link]").click
 
       expect(page).not_to have_content("iamvery.com")
     end
