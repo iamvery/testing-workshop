@@ -5,7 +5,7 @@ Take a few moments to prepare your system for the workshop. In this guide, you w
 ## TL;DR
 
 - Ruby (v2.1 or higher)
-- PostgreSQL
+- SQlite3
 - PhantomJS
 - App source code (https://github.com/iamvery/rc17-testing-workshop)
 
@@ -15,12 +15,9 @@ It is assumed that you have a modern version of Ruby installed on your system. T
 
 If you need assistance installing Ruby, check out the information available at https://www.ruby-lang.org/en/documentation/installation/.
 
-## PostgreSQL
+## SQlite3
 
-The app you will be using during the workshop uses a PostgreSQL database. PostgreSQL, often referred to as "postgres" or "pg", is tremendously popular, and there is plenty of information available online about its installation and configuration. Hopefully you have already installed and used PG with projects on your system, but if you have not here are some resources:
-
-- https://www.postgresql.org/download/ - Official download site (all platforms)
-- https://postgresapp.com/ - "The easiest way to get started with PostgreSQL on the Mac" (recommended for macOS)
+The app you will be using during the workshop uses a SQlite3 database. SQlite is not a production-ready database, but it is relatively easy to configure and is available by default on macOS. If you are unsure whether you have SQlite3 installed, you might just try completing this guide. If you run into any problems bundling or setting up the database, here is a good resource for configuring SQlite3 on your system: http://mislav.net/rails/install-sqlite3/.
 
 ## PhantomJS
 
