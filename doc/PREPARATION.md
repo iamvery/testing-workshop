@@ -67,11 +67,11 @@ $ bin/rails server
 
 Open the application at [http://localhost:3000][local].
 
-![Screen Shot 2017-03-29 at 11.12.36 AM](/Users/jay/Desktop/Screen Shot 2017-03-29 at 11.12.36 AM.png)
+![New Pinster](/Users/jay/Code/OSS/rc17-testing-workshop/doc/pinster-without-link.png)
 
 You should see something like above. Try creating a link.
 
-![Screen Shot 2017-03-29 at 11.13.25 AM](/Users/jay/Desktop/Screen Shot 2017-03-29 at 11.13.25 AM.png)
+![Link pinned](/Users/jay/Code/OSS/rc17-testing-workshop/doc/pinster-with-link.png)
 
 And that just about does it. As the interface suggests, you can also delete links by clicking the "x" icon to the right. One final feature that is less obvious from the interface is that Pinster uses ActionCable to stream link created and deleted links to clients. You can try this out by opening another browser window and watch them both while adding and deleting links.
 
