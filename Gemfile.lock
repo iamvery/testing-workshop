@@ -91,6 +91,9 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    opengraph_parser (0.2.3)
+      addressable
+      nokogiri
     poltergeist (1.13.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -188,6 +191,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   listen (~> 3.0.5)
+  opengraph_parser (~> 0.2)
   poltergeist
   puma
   rails (~> 5.0)
