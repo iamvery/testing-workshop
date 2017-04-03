@@ -6,55 +6,29 @@
 
 # Introduction
 
-The goal is to expose you to different levels of testing and how to move in and out of them to see a feature to completion driven by tests. You may or may not have feelings of overkill through this exercise. It is important to not focus too much on whether this particular example is overkill, but rather note the strategies and tools which may aid your development in the future.
+The goal is to expose you to different levels of testing and how to move in and out of them to see a feature driven by tests to completion. You may or may not have reactions of overkill through this exercise. It is important to not focus too much on whether this particular example is overkill, but rather note the strategies and tools which may aid your development of future software.
+
+This is an interactive tutorial that will guide you in realizing a new feature with tests. You should already have the app bootstrapped by following the [preparation guide][prep-guide].
 
 # Pinster
 
-The rest of this material will be an interactive tutorial. Start by downloading and bootstrapping a simple application, Pinster. Pinster is a revolutionary link "pinning" app. Never again will you forget a link to an important thing you found on the Internet!
-
-Once you have Pinster running, you will begin adding a brand new feature to it! This will change everything.
-
-## Get Pinster
-
-The base Pinster application is free and open source. Clone the source to your machine and changing to its directory:
-
-```bash
-$ git clone https://github.com/iamvery/rc17-testing-workshop.git
-Cloning into 'rc17-testing-workshop'...
-... done.
-$ cd rc17-testing-workshop
-```
-
-Next bootstrap the app by installing dependencies and setting up your development database:
-
-```Shell
-rc17-testing-workshop$ bundle install && bin/rake db:setup && echo done!
-...
-done!
-```
-
-Finally, start Pinster and see what it can do:
-
-```
-rc17-testing-workshop$ bin/rails server
-...
-=> Rails application starting in development on http://localhost:3000
-...
-```
-
-Open the application at [http://localhost:3000][local].
-
-Pinster has a tantilizing user interface which consists of a brilliantly simple, single _URL_ input and submission button. Go ahead and submit a link. You will see the link immediately appear below the input. The sky is the limit on the number of links you can submit!
-
-You will also notice a small "x" to the right of each link. This powerful little button is a tool of destruction. By clicking it, the corresponding link vaporizes.
-
-As if this app wasn't already powerful enough, it has one more secret. Changes made to links are _streamed in real-time_ to other clients connected to the app. Open another browser, add and remove some links, and see the brilliance of Pinster in action.
-
-Pinster comes with an automated test suite written in [RSpec][rspec]. You can run the full test suite at any time with the command `bin/rspec`. Run the tests a lot while you're developing features. Before each run, consider for a moment what _you expect_ to happen. If you're surprised by what _actually_ happens, think about why it behaves in an unexpected way.
+Just as a reminder of what you learned in the [prepation guide][prep-guide], Pinster is a link-pinning app. The app is started in development mode with the command `bin/rails server`.
 
 ### Tests
 
-Ok, so this app isn't actually all that fancy, but it does come with a few tests. In fact, the functionality is so basic that no unit tests are needed to confidently deliver its core functionality: adding and deleting links. All the tests included so far are _**acceptance**_ tests. As their name suggests, these tests define the acceptance criteria for each feature they represent. Have a look at the acceptance test for viewing links:
+Pinster comes with an automated test suite written with [RSpec][rspec] which can be run at any time with the command `bin/rspec`. Run the tests frequently while you're developing features. Before each run, consider for a moment what you _expect_ to happen. If you're surprised by what _actually_ happens, think about why it behaves in an unexpected way.
+
+Give the tests a run:
+
+```
+$ bin/rspec
+...
+
+Finished in 0.41927 seconds (files took 2.65 seconds to load)
+3 examples, 0 failures
+```
+
+The functionality of Pinster is so basic that no unit tests were needed to confidently deliver its core functionality: adding and deleting links. All the tests included are integrated _**acceptance**_ tests. As their name suggests, these tests define the acceptance criteria for each feature they represent. Have a look at the acceptance test for viewing links:
 
 ```ruby
 # in spec/acceptance/links_spec.rb
@@ -71,11 +45,17 @@ describe "viewing links" do
 end
 ```
 
-If you haven't used RSpec, don't fret. The syntax tends to be very intuitive. If you're feeling lost, check out [Treehouse][th-rspec] and [Code School][cs-rspec]. Acceptance tests often read as if a user is interacting with the app. At the top, the conditions are set up for the test. Next, the user interacts with the app by visiting the page. Finally, observations are made about the content of the page that must be true for the feature to be implemented correctly. This structure of tests is often called ["Given-When-Then"][gwt].
+This test reads easily to describe the app's behavior.
+
+> When two links exist, they are both visible on the page.
+
+Acceptance tests often read as if a user is interacting with the app. At the top, the conditions are set up for the test. Next, the user interacts with the app by visiting the page. Finally, observations are made about the content of the page that must be true for the feature to be implemented correctly. This structure of tests is often called ["Arrange-Act-Assert"][arrange-act-assert].
+
+If you haven't used RSpec, don't fret. The syntax is very intuitive. If you're interested in learning more, check out the book [Effective Testing with RSpec 3][rspec-book]. There is also good intro material at [Treehouse][th-rspec] and [Code School][cs-rspec].
 
 ## A New Feature
 
-To make Pinster even more useful, each link should include its fetched page title as a preview. Here are the requirements:
+It's time to add a new feature to Pinster. Each link will include its fetched page title as a preview. Here are the requirements:
 
 - Given a link to some webpage exists.
 - When you view links.
@@ -91,24 +71,26 @@ With any clearly defined user story, the first test you write is an _**acceptanc
 
 ### ✍️ _WRITE!_
 
-It is time to write your acceptance test for the page title feature. You should think about the structure of this test:
+Before moving on, take a shot at writing this acceptance test. Model it after existing tests. Consider the structure of this new test:
 
 - Given: What state much the app have before the user interacts with it?
 - When: What interaction does the user perform?
 - Then: What observation(s) must be true for the feature to be complete?
 
-Go ahead and write your acceptance test in `spec/acceptance/links_spec.rb` before continuing.
+Add your acceptance test to `spec/acceptance/links_spec.rb`.
 
 ---
 
-Ok, now that you have written the acceptance test, let's talk about it together. You _did_ write it yourself didn't you..?
+Nice work! You _did_ write it yourself didn't you..?
 
 Fundamentally, this feature is about _viewing_ links, so it probably fits best into the "viewing links" context:
 
 ```diff
  # in spec/acceptance/links_spec.rb
  describe "viewing links" do
-   it "displays all links" # ...
+   it "displays all links" do
+     # ...
+   end
 +
 +  it "displays the page title for each link" do
 +    Link.create!(url: "http://twitter.com")
@@ -122,7 +104,7 @@ Fundamentally, this feature is about _viewing_ links, so it probably fits best i
  end
 ```
 
-Nice! That test cleanly summarizes an acceptable scenario for the feature you are adding.
+Nice! That test cleanly summarizes an acceptable scenario for the feature you are adding. Note the similarty is has to the other test in this context.
 
 - Given: a link to Twitter and a link to Google exist in the app.
 - When: the user views the links.
@@ -140,7 +122,9 @@ Failures:
      # ./spec/acceptance/links_spec.rb:21:in `block (3 levels) in <top (required)>'
 ```
 
-You're first failing test! To figure out where to go from here, take a moment to think about what the test is telling you. It expected to find "Twitter", the first link's page title, on the page. Of course, you are only displaying the URL for each link. Have a look at the link view partial:
+You're first failing test! To figure out where to go from here, take a moment to think about what the test is telling you. It expected to find "Twitter", the first link's page title, on the page. Of course, you are only displaying the URL for each link.
+
+Open the link view partial:
 
 ```erb
 <!-- app/views/links/_link.html.erb -->
@@ -152,7 +136,9 @@ You're first failing test! To figure out where to go from here, take a moment to
 </li>
 ```
 
-You could go lo-fi and put a static `Twitter` in the page, but that's not really a step forward. The test would still immediately fail when it looks for "Google". The intuition here is that you need to move deeper into the system in order to continue building this feature. As a first step, make a predicion about how your model will work by adding a `link.title` to the page:
+To make the test pass, you could go lo-fi and put a static `Twitter` in the partial, but that's not really a step forward. The test would still immediately fail at the next assertion when it looks for "Google".
+
+The realization here is that you need to move deeper into the system in order to continue building this feature with tests. Our model lacks the concept of a link's `title`. As a first step, make a predicion about how your model will work by adding a `link.title` to the page:
 
 ```diff
  <!-- app/views/links/_link.html.erb -->
@@ -162,7 +148,7 @@ You could go lo-fi and put a static `Twitter` in the page, but that's not really
  <!-- ... ->
 ```
 
-Oops, now when you run the tests _everything_ fails!
+Run the suite again and see _everything_ fails!
 
 ```
 $ bin/rspec
@@ -176,15 +162,17 @@ Failures:
 ...
 ```
 
- Oh no! Actually, oh _yes_. What is this telling you? It's telling you that you're missing a fundamental interface on our model, Link#title. This hint informs you that it is time to zoom in with our testing strategy. It's time to write a _**unit**_ test.
+ Oh no!.. Actually, oh _yes_. This is telling you that you're missing a fundamental interface on our model, the `Link` `title`. This hint informs you that it is time to zoom in with our testing strategy. It's time to build this new interface with an isolated test.
 
-## Unit Testing
+## Isolated Testing
+
+When adding a feature to an object in your system, you generally want to realize it in isolation. You will start by writing an isolated test and then building the behavior needed to make it pass. This type of test is often called a "unit test", but defining "unit" is fraught with confusion. The point is, it's isolated for testing.
 
 ---
 
 ### ✍️ _WRITE!_
 
-Take a moment to write a unit test for the Link#title method. It should return the page title for the link's URL. In case you're not familiar with RSpec, here's the skeleton for this new spec file:
+Write an isolated test for the `Link` `title` method. It will return the page title for the link's URL. Here's the skeleton for this new spec file:
 
 ```ruby
 # in spec/models/link_spec.rb
@@ -193,18 +181,17 @@ require "rails_helper"
 RSpec.describe Link do
   describe "#title" do
     it "returns the page title" do
-      # WRITE THE TEST HERE
+      # What is the simplest possible test you could write here?
     end
   end
 end
 ```
 
-- What is the simplest possible test you could write here?
-- What is the simplest possible implementation to make your test pass? Make it _very_ simple, even dumb.
+Once you have written the isolated test, complete the implementation in the `Link` model to make the test pass. What is the simplest possible implementation to make your test pass? Make it _very_ simple, even dumb...
 
 ------
 
-Your first unit test will be used to drive the `Link` model's `title` instance method implementation. Start by finishing the test:
+Your first isolated test will be used to drive the `Link` model's `title` instance method implementation. Complete the test:
 
 ```ruby
 # in spec/models/link_spec.rb
@@ -217,7 +204,7 @@ it "returns the page title" do
 end
 ```
 
-While focusing on a single unit, you will want to run only the relevant unit tests. In this case, run the link model spec:
+While focusing on a single unit of behavior, you will want to focus the run to the relevant isolated test(s). In this case, run only the link model spec:
 
 ```
 $ bin/rspec spec/models/link_spec.rb
@@ -248,13 +235,13 @@ It might seem strange to start with such a dumb implementation. Obviously the li
 
 From here you may continue to iterate on the implementation and find an optimal solution.
 
-Take a moment to consider your next move. You could zoom back out to the acceptance level, but the unit is still not complete. The implementation of Link#title is clearly lacking. You need a way to fetch the actual page title for a link's URL.
+Take a moment to consider your next move. You could zoom back out to the acceptance test, but the unit is still not complete. The implementation of Link#title is clearly lacking. You need a way to fetch the actual page title for a link's URL.
 
 ### Open Graph
 
-The [Open Graph Protocol][ogp] defines a way of relaying page information as a part of it's [meta][meta] data. You find the Rubygem `opengraph_parser` and it seems to fit the bill. Don't overthink this too much. Given the right design, you should be able to swap implementations in and out as you look for the optimal solution.
+The [Open Graph Protocol][ogp] defines a way of relaying page information as a part of it's [meta][meta] data. Use the Rubygem `opengraph_parser` and it seems to fit the bill. Don't overthink this too much. Given the right design, you can swap implementations in and out as you look for the optimal solution.
 
-Add `gem "opengraph_parser"` to your `Gemfile` and `bundle install`. Take a moment to play around with this library in the Rails console:
+Confirm `gem "opengraph_parser"` is in your `Gemfile` and `bundle install`. Play around with it in the Rails console:
 
 ```
 $ bin/rails console
@@ -264,17 +251,19 @@ irb> og.title
 => "Google"
 ```
 
-That works well enough! Next, use this library to complete the implementation of Link#title.
+That works well enough! Next yp, use this library to complete the implementation of Link#title.
 
 ---
 
 ### ✍️ _WRITE!_
 
-Go ahead and update the implementation to use the `opengraph_parser` library. This should only require a small change. Once you have made the minimal change necessary to get the tests passing, consider the solution as a whole. Do you recognize any drawbacks?
+Replace the naive implementation by using the `opengraph_parser` library. This should be a small change.
+
+With the library utilitized, run the entire suite with `bin/rspec`. Does it all pass? Are there any drawbacks to this implementation?
 
 ---
 
-The change to `title` is straight forward. Replace the static title value with a call to the Open Graph library:
+The change to `title` is minimal. Replace the static title value with a call to the Open Graph library:
 
 ```diff
  # in app/models/link.rb
@@ -286,7 +275,7 @@ The change to `title` is straight forward. Replace the static title value with a
  end
 ```
 
-When you run the model unit test, you see that it passes. In fact, running the entire test suite passes! But is the feature done?!
+When you run the model isolated test, you see that it passes. In fact, running the entire test suite passes! But is the feature done?!
 
 ```
 $ bin/rspec
@@ -296,26 +285,30 @@ Finished in 2.36 seconds (files took 1.9 seconds to load)
 5 examples, 0 failures
 ```
 
-Actually there's a problem. Did you notice that the test run was _significantly_ slower that time? That's because your test suite now has a dependency on the network in order to pass. Try disabling your network and run the tests. You should see many tests fail again. This is unacceptable for a couple reasons:
+Not quite. There's a problem.
 
-1. The "slowness" of your test suite will grow with every test that accesses the network.
-2. Your test suite now _requires_ an Internet connection. What if you want to hack on the road?
+Did you notice that the test run was _significantly_ slower that time? The original test run took about **0.4s** to complete. Now it is taking well over **2s**!
 
-This is quite a problem, but thankfully you fix problems for a living.
+That's because your test suite now has a dependency on the network in order to pass. Each time the `OpenGraph` object is used, it makes a network request to fetch the remote page.
 
-## An Adapter
+Try disabling your network and run the tests. You should see many tests fail again. There are several drawbacks to having this coupling:
+
+1. The "slowness" of your test suite will increase with every additional test that accesses the network.
+2. Your test suite now _requires_ an Internet connection. It will be useless while you're offline.
+
+## An Wrapper
 
 The problem you have at this point is that your test suite establishes a _real connection_ to an external resource. This has the effect of coupling your test suite to the Internet which is both slow and painful for offline development.
 
 One solution to this problem is to introduce a tool like [VCR][vcr] to record and playback external network requests during your tests. While this approach works, it is often tedious to manage the recorded network transactions as your application grows in complexity. As an alternative, consider [injecting a test fake][fakes] which mocks the interface of the object making the external connection. Besides, why test the library code again when it already [has tests][og-specs].
 
-Remember, it is important that you [don't mock an interface that you don't own][dont-mock]. So first, create an adapter object which has an interface you _do_ own. Go ahead and do that.
+Remember, it is important that you [don't mock an interface that you don't own][dont-mock]. So first, create a wrapper object which has an interface you _do_ own.
 
 ------
 
 ### ✍️ _WRITE!_
 
-Create an adapter for the `OpenGraph` object that exposes the minimal interface needed by your system, a `title`. It's important establish concepts in your domain, so for simplicity call this object a `WebPage`. Here are a couple files to get you started:
+Create a wrapper for the `OpenGraph` object that exposes the minimal interface needed by your system, a `title`. It's useful to establish concepts in your domain, so for simplicity call this object a `WebPage`. Here are a couple files to get you started:
 
 ```ruby
 # in spec/lib/web_page_spec.rb
@@ -323,24 +316,27 @@ require "spec_helper"
 require "web_page"
 
 RSpec.describe WebPage do
-  # YOUR TESTS HERE
+  describe "#title" do
+    # YOUR TESTS HERE
+  end
 end
 ```
 
 ```Ruby
 # in lib/web_page.rb
 class WebPage
-  # YOUR IMPLEMENTATION HERE
 end
 ```
 
-Consider the purpose of this new object: to establish an interface you own for interacting with a library you do not own. Therefore, all these tests should do is verify that integration behaves correctly. Give the implementation a shot, but don't spend too much time on it if things aren't making sense.
+Consider the purpose of this new object: to establish an interface you own for interacting with a library you do not own. Therefore, all these tests should do is verify that integration behaves correctly. Give the implementation a shot, but don't spend too much time on it if things aren't making sense yet.
 
 ------
 
 To keep with the tradition of test-driven code, first define the tests that verify the behavior of the adapter.
 
 # **TODO** split this example up and explain things more thoroughly!
+
+# TODO consider using webmock instead of so much mocking/stubbing an isolated test
 
 ```ruby
 # in spec/lib/web_page_spec.rb
@@ -652,11 +648,11 @@ There are a couple more interesting things to consider about your solution:
 
 # **TODO** replace link list with bootstrap wells. make title an h3 and link paragraph. change delete icon to button with text
 
-[local]: http://localhost:3000
 [rspec]: http://rspec.info/
+[rspec-book]: https://pragprog.com/book/rspec3/effective-testing-with-rspec-3
 [th-rspec]: http://blog.teamtreehouse.com/an-introduction-to-rspec
 [cs-rspec]: https://www.codeschool.com/courses/testing-with-rspec
-[gwt]: https://en.wikipedia.org/wiki/Given-When-Then
+[arrange-act-assert]: https://github.com/testdouble/contributing-tests/wiki/Arrange-Act-Assert
 [ogp]: http://ogp.me/
 [meta]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 [vcr]: https://github.com/vcr/vcr
