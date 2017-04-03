@@ -28,6 +28,7 @@ gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Dependency unused, but pre-installed for workshop example
 gem 'opengraph_parser', '~> 0.2'
 
 group :development, :test do
