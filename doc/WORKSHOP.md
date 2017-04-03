@@ -1,6 +1,8 @@
-# TDD: From feature to tests to implementation
+# Workshop
 
-**RailsConf slot time:** 2 hours 20 minutes
+##### TDD: From feature to tests to implementation
+
+**Duration:** 2 hours 20 minutes
 
 # Introduction
 
