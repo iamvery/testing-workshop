@@ -3,4 +3,4 @@
 set -euo pipefail
 
 bundle package --all-platforms
-zip --recurse-paths tmp/pkg.zip . --exclude .bundle/\* .git/\* log/\* tmp/\* .DS_Store .byebug_history db/\*.sqlite3
+zip --recurse-paths tmp/pinster.zip . --exclude .bundle/\* .git/\* log/\* tmp/\* .DS_Store .byebug_history db/\*.sqlite3
