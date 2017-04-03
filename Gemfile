@@ -46,6 +46,7 @@ group :test do
   gem "capybara" # acceptance test framework
   gem "rspec-rails"
   gem "poltergeist" # headless web driver integrating capybara with PhantomJS
+  gem "webmock", "~> 2.3"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
