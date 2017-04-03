@@ -10,6 +10,18 @@ The goal is to expose you to different levels of testing and how to move in and 
 
 This is an interactive tutorial that will guide you in realizing a new feature with tests. You should already have the app bootstrapped by following the [preparation guide][prep-guide].
 
+To help orient you in the material, there are a few conventions used.
+
+> ✍️ **WRITE!**
+
+When you see this, it's your turn. Take a few moments to try and find the solution to the current problem. If you feel stuck or short on patience, continue after the break and complete the implementation. We'll work each section aloud together after folks have had a chance to do it themselves.
+
+> 👂 **LISTEN!**
+
+When you see this, it's my turn. Hopefully I'll have something interesting/useful/humorous (pick two) to say about the section.
+
+Hope you enjoy it!
+
 # Pinster
 
 Just as a reminder of what you learned in the [prepation guide][prep-guide], Pinster is a link-pinning app. The app is started in development mode with the command `bin/rails server`.
@@ -71,7 +83,7 @@ With any clearly defined user story, the first test you write is an _**acceptanc
 
 ### ✍️ _WRITE!_
 
-Before moving on, take a shot at writing this acceptance test. Model it after existing tests. Consider the structure of this new test:
+Write the acceptance test for this new feature. Model it after existing tests. Consider the structure of this new test:
 
 - Given: What state much the app have before the user interacts with it?
 - When: What interaction does the user perform?
@@ -136,7 +148,7 @@ Open the link view partial:
 </li>
 ```
 
-To make the test pass, you could go lo-fi and put a static `Twitter` in the partial, but that's not really a step forward. The test would still immediately fail at the next assertion when it looks for "Google".
+To correct the first failure, you could go lo-fi and put a static `Twitter` in the partial, but that's not really a step forward. The test would still immediately fail at the next assertion when it looks for "Google".
 
 The realization here is that you need to move deeper into the system in order to continue building this feature with tests. Our model lacks the concept of a link's `title`. As a first step, make a predicion about how your model will work by adding a `link.title` to the page:
 
@@ -162,17 +174,17 @@ Failures:
 ...
 ```
 
- Oh no!.. Actually, oh _yes_. This is telling you that you're missing a fundamental interface on our model, the `Link` `title`. This hint informs you that it is time to zoom in with our testing strategy. It's time to build this new interface with an isolated test.
+ Oh no!.. Actually, oh _yes_. This is telling you that you're missing a fundamental interface on our model, the `Link` `title`. These errors inform you that it is time to zoom in with your testing strategy. It's time to build this new interface with an isolated test.
 
 ## Isolated Testing
 
-When adding a feature to an object in your system, you generally want to realize it in isolation. You will start by writing an isolated test and then building the behavior needed to make it pass. This type of test is often called a "unit test", but defining "unit" is fraught with confusion. The point is, it's isolated for testing.
+When adding interfaces, you generally want to realize them in isolation. Start by writing an isolated test and then building the behavior needed to make it pass. This type of test is sometimes called a "unit test", but folks struggle to agree on what "unit" means. The point is, the subject under test is being isolated from the rest of the system.
 
 ---
 
 ### ✍️ _WRITE!_
 
-Write an isolated test for the `Link` `title` method. It will return the page title for the link's URL. Here's the skeleton for this new spec file:
+Add an isolated test for the `Link` `title` method. It will return the page title for the link's URL. Here's the skeleton for this new spec file:
 
 ```ruby
 # in spec/models/link_spec.rb
@@ -188,6 +200,8 @@ end
 ```
 
 Once you have written the isolated test, complete the implementation in the `Link` model to make the test pass. What is the simplest possible implementation to make your test pass? Make it _very_ simple, even dumb...
+
+Run this spec in isolation while you build the new interface with `bin/rspec spec/models/link_spec.rb`.
 
 ------
 
@@ -217,7 +231,7 @@ Failures:
        undefined method `title' for #<Link:0x007fe563b23298>
 ```
 
-That is the same error you got in the acceptance test! You're on the right track, but now that the error has manifested closer to the unit being built. You can focus your energy on this single method. Go ahead and add a minimal implementation to the `Link` model:
+That is the same error you got in the acceptance test! You're on the right track, but now that the error has manifested closer to the interface being built. You can focus your energy on this single method. Go ahead and add a minimal implementation to the `Link` model:
 
 ```diff
  # in app/models/link.rb
@@ -228,30 +242,28 @@ That is the same error you got in the acceptance test! You're on the right track
  end
 ```
 
-It might seem strange to start with such a dumb implementation. Obviously the literal "Google" is not the page title for any link URL, but this silly addition has some valueable purposes:
+It might seem strange to start with such a dumb implementation. Obviously the literal `"Google"` is not the page title for _any_ link URL, but this silly addition has some valuable properties:
 
-1. It serves to make the unit test pass. Run it and see!
-2. It serves to again isolate the acceptance test failure to the our one feature scenario. Run `bin/rspec` and see!
+1. It serves to make the isolated test pass. Run it and see!
+2. It serves to again isolate the acceptance test failure to the our one feature scenario. It no longer errors, it _fails_. Run `bin/rspec` and see!
 
-From here you may continue to iterate on the implementation and find an optimal solution.
-
-Take a moment to consider your next move. You could zoom back out to the acceptance test, but the unit is still not complete. The implementation of Link#title is clearly lacking. You need a way to fetch the actual page title for a link's URL.
+Take a moment to consider your next move. You could zoom back out to the acceptance test, but this new interface is clearly incomplete. You need a way to fetch the actual page title for a link's URL.
 
 ### Open Graph
 
-The [Open Graph Protocol][ogp] defines a way of relaying page information as a part of it's [meta][meta] data. Use the Rubygem `opengraph_parser` and it seems to fit the bill. Don't overthink this too much. Given the right design, you can swap implementations in and out as you look for the optimal solution.
+The [Open Graph Protocol][ogp] defines a way of relaying page information as a part of it's [meta][meta] data. Use the Rubygem `opengraph_parser` which seems to fit the bill. Don't worry about the particular library too much. Given the right design, you can swap implementations in and out as you look for the best fit.
 
-Confirm `gem "opengraph_parser"` is in your `Gemfile` and `bundle install`. Play around with it in the Rails console:
+Confirm `gem "opengraph_parser"` is in your `Gemfile` and `bundle install`. Play around with it in the Rails console to see how it works:
 
 ```
 $ bin/rails console
-irb> og = OpenGraph.new("http://google.com")
+irb> page = OpenGraph.new("http://google.com")
 => #<OpenGraph...>
-irb> og.title
+irb> page.title
 => "Google"
 ```
 
-That works well enough! Next yp, use this library to complete the implementation of Link#title.
+That works well enough! Next up, use this library to complete the implementation of `Link` `title`.
 
 ---
 
@@ -285,13 +297,13 @@ Finished in 2.36 seconds (files took 1.9 seconds to load)
 5 examples, 0 failures
 ```
 
-Not quite. There's a problem.
+Not quite. There's a subtle problem.
 
 Did you notice that the test run was _significantly_ slower that time? The original test run took about **0.4s** to complete. Now it is taking well over **2s**!
 
 That's because your test suite now has a dependency on the network in order to pass. Each time the `OpenGraph` object is used, it makes a network request to fetch the remote page.
 
-Try disabling your network and run the tests. You should see many tests fail again. There are several drawbacks to having this coupling:
+Try disabling your network and run the tests. You should see many tests fail again. There are several drawbacks to having this coupling, but to name a couple:
 
 1. The "slowness" of your test suite will increase with every additional test that accesses the network.
 2. Your test suite now _requires_ an Internet connection. It will be useless while you're offline.
