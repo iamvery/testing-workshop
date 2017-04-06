@@ -1,6 +1,6 @@
 # System Preparation
 
-##### TDD: From Feature to Tests to Implementation
+##### Feature. Tests. Implementation.
 
 Take a few moments to prepare your system for the workshop. In this guide, you will download the example app source code and install it's dependencies.
 
