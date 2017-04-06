@@ -1026,3 +1026,5 @@ As you have seen through this workshop, there are many imporant decisions to be 
 [webmock]: https://github.com/bblimke/webmock
 [nokogiri]: http://www.nokogiri.org/
 [london]: https://github.com/testdouble/contributing-tests/wiki/London-school-TDD
+[prep-guide]: https://github.com/iamvery/nothing-to-see-here/releases/download/v0/PREPARATION.pdf
+
