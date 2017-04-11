@@ -85,7 +85,7 @@ With any clearly defined user story, the first test you write is an _**acceptanc
 
 Write the acceptance test for this new feature. Model it after existing tests. Consider the structure of this new test:
 
-- Given: What state much the app have before the user interacts with it? (Arrange)
+- Given: What state must the app have before the user interacts with it? (Arrange)
 - When: What interaction does the user perform? (Act)
 - Then: What observation(s) must be true for the feature to be complete? (Assert)
 
@@ -415,7 +415,7 @@ RSpec.describe WebPage do
     it "returns the fetched page title" do
       url = "http://google.com"
       
-      page = WebPage.new(url)
+      page = described_class.new(url)
       title = page.title
       
       expect(title).to eq("Google")
@@ -860,7 +860,7 @@ describe "#title" do
   it "delegates to the OpenGraph instance for its title" do
     page = described_class.new(url, lib: lib)
     expect(instance).to receive(:page_title)
-    page.page_title    
+    page.title    
   end
 end
 ```
