@@ -9,7 +9,7 @@ Take a few moments to prepare your system for the workshop. In this guide, you w
 - Install [Ruby](#ruby) (v2.1 or higher)
 - Install [SQlite3](#sqlite3)
 - Install [PhantomJS](#phantomjs)
-- Download [app source code](#pinster) ([here][latest-release])
+- Download [app source code](#pinster) ([pinster.zip][latest-release])
 - [Verify](#verify-the-things) setup with `bin/rspec`
 
 ## Ruby
@@ -26,7 +26,7 @@ The app you will be using during the workshop uses a SQlite3 database. SQlite is
 
 This so-called headless browser is used to drive acceptance tests from a user's perspective. PhantomJS is a dependency of [poltergeist](https://github.com/teampoltergeist/poltergeist) which is the driver used by [capybara](https://github.com/teamcapybara/capybara) in this app's test suite. Probably, you don't need to know about this stuff, but it is required to build and run the test suite, so make sure you have it installed.
 
-The poltergist documentation has a concise guide for installing PhantomJS at https://github.com/teampoltergeist/poltergeist#installing-phantomjs.
+The poltergist documentation has a concise guide for installing PhantomJS at [https://github.com/teampoltergeist/poltergeist#installing-phantomjs][phantomjs].
 
 ## Pinster
 
@@ -43,13 +43,13 @@ pinster $
 
 From here on, it is assumed that all commands are run from within this extracted directory. Next bootstrap the app by installing dependencies and setting up your development database.
 
-**Note**: The app package comes with all the macOS dependencies cached. If you are using another platform or run into problems bundling, you might try `bundle install` without the `--local` option.
-
 ```
 $ bundle install --local && bin/rake db:setup && echo done!
 ...
 done!
 ```
+
+**Note**: The app package comes with all the macOS dependencies cached. If you are using another platform or run into problems bundling, you might try `bundle install` without the `--local` option.
 
 ## Verify the Things
 
@@ -89,3 +89,4 @@ You are now all set for the workshop _Feature. Tests. Implementation._ As you mi
 [latest-release]: https://github.com/iamvery/rc17-testing-workshop/releases/tag/v0
 [rspec]: http://rspec.info/
 [local]: http://localhost:3000
+[phantomjs]: https://github.com/teampoltergeist/poltergeist#installing-phantomjs
