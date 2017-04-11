@@ -84,7 +84,7 @@ And that just about does it. As the interface suggests, you can also delete link
 
 ### Congratulations!
 
-You are now all set for the workshop _TDD: From Feature to Tests to Implementation_. As you might have guessed, you will be adding to the understated simplicity of Pinster by building a new feature with tests! I can't wait to see you there 🙂.
+You are now all set for the workshop _Feature. Tests. Implementation._ As you might have guessed, you will be adding to the understated simplicity of Pinster by building a new feature with tests! I can't wait to see you there 🙂.
 
 [latest-release]: https://github.com/iamvery/rc17-testing-workshop/releases/tag/v0
 [rspec]: http://rspec.info/
