@@ -20,11 +20,13 @@ When you see this, it's your turn. Take a few moments to try and find the soluti
 
 When you see this, it's my turn. Hopefully I'll have something interesting/useful/humorous (pick two) to say about the section.
 
+Finally, the material will sometimes reference external links. Don't feel like you need to go read them during the workshop. You probably won't have time, but they're good resources for further learning.
+
 Hope you enjoy it!
 
 # Pinster
 
-Just as a reminder of what you learned in the [prepation guide][prep-guide], Pinster is a link-pinning app.
+Just as a reminder of what you learned in the [preparation guide][prep-guide], Pinster is a link-pinning app.
 
 ### Tests
 
@@ -77,7 +79,7 @@ That sounds useful. Make it so.
 
 ## Your First Test
 
-With any clearly defined user story, the first test you write is an _**acceptance**_ test. This is the so-called "highest level" test that you will write, and although it is the first one written, it is likely to be the _last_ one passing. The passing of this test is an indication that your feature _might_ be done. Any time the acceptance tests pass, it is time to consider refactors to the implementation.
+With any clearly defined user story, the first test you write is an _**acceptance**_ test. This is the so-called "highest level" test that you will write, and although it is the first one written, it is likely to be the _last_ one passing. The passing of this test is an indication that your feature _might_ be done. Any time the acceptance tests pass, it is time to consider refactoring your implementation.
 
 ---
 
@@ -150,7 +152,7 @@ Have a look at the link view partial to see how links are formatted for display:
 
 To correct the first failure, you could go lo-fi and put a static `Twitter` in the partial, but that's not really a step forward. The test would still immediately fail at the next assertion when it looks for "Google".
 
-The realization here is that your model lacks the concept of a link's `title`. You need to move deeper into the system in order to continue building this feature with tests. As a first step, make a predicion about how your model will work by adding a `link.title` to the page:
+The realization here is that your model lacks the concept of a link's `title`. You need to move deeper into the system in order to continue building this feature with tests. As a first step, make a prediction about how your model will work by adding a `link.title` to the page:
 
 ```diff
  <!-- app/views/links/_link.html.erb -->
@@ -189,7 +191,7 @@ Failures:
 
 ## Isolated Testing
 
-When adding interfaces, you should realize them in isolation. Of course you will need to have some idea how this new interface will be used, so it's often useful to take a guess or make an assumption like you did by adding `link.title` to the view partial. Then you can start by writing an isolated test and then building the behavior needed to make it pass. This type of test is sometimes called a "unit test", but folks struggle to agree on what "unit" means. The point is, the subject under test is being isolated from the rest of the system, an _isolated_ test.
+When adding interfaces, you should build them in isolation. Of course you will need to have some idea how this new interface will be used, so it's often useful to take a guess or make an assumption like you did by adding `link.title` to the view partial. Then you can start by writing an isolated test and then building the behavior needed to make it pass. This type of test is sometimes called a "unit test", but folks struggle to agree on what "unit" means. The point is, the subject under test is being isolated from the rest of the system, an _isolated_ test.
 
 ---
 
@@ -269,9 +271,9 @@ Take a moment to consider your next move. You could zoom back out to the accepta
 
 ### Open Graph
 
-The [Open Graph Protocol][ogp] defines a way of relaying page information as a part of it's [meta][meta] data. The Rubygem `opengraph_parser` seems to fit the bill for parsing this information. Don't worry about the particular library too much. Given the right design, you can swap implementations in and out as you look for the best fit.
+The [Open Graph Protocol][ogp] defines a way of relaying page information as a part of its [meta][meta] data. The Rubygem `opengraph_parser` seems to fit the bill for parsing this information. Don't worry about the particular library too much. Given the right design, you can swap implementations in and out as you look for the best fit.
 
-Confirm `gem "opengraph_parser"` is in your `Gemfile` and `bundle install`. Play around with it in the Rails console to see how it works:
+Confirm `gem "opengraph_parser"` is in your `Gemfile` and installed. Play around with it in the Rails console to see how it works:
 
 ```
 $ bin/rails console
@@ -339,7 +341,7 @@ Try disabling your network and run the tests. You should see many tests fail aga
 
 ---
 
-## An Wrapper
+## A Wrapper
 
 The problem you have at this point is that your test suite establishes a _real connection_ to an external resource. This has the effect of coupling your test suite to the Internet which is both slow and painful for offline development.
 
@@ -544,7 +546,7 @@ require "fake_web_page"
 RSpec.describe FakeWebPage do
   describe "#title" do
     it "returns the titleized URL domain name" do
-      web_page = described_class.new("http://some_web_page.com/content")
+      web_page = described_class.new("http://some-web-page.com/content")
       title = web_page.title
 
       expect(title).to eq("Some Web Page")
@@ -594,7 +596,7 @@ class FakeWebPage
   end
 
   def uri
-    URI(url)
+    @uri ||= URI(url)
   end
 end
 ```
@@ -613,7 +615,20 @@ You might have come up with something different, but the truth is it doesn't mat
 
 ## Dependency Injection
 
-To decouple the `Link` model from the network, you need to replace calls to the real `WebPage` object with a `FakeWebPage`. Dependency injection is a good strategy for loosening coupling and supporting such replacements. It is a viable strategy for this case. Update the `title` method of `Link` to accept an injected library as an optional argument:
+To decouple the `Link` model from the network, you need to replace calls to the real `WebPage` object with a `FakeWebPage`. Dependency injection is a good strategy for loosening coupling and supporting such replacements. It is a viable strategy for this case.
+
+---
+
+### ✍️ _WRITE!_
+
+Identify seams for injecting the `FakeWebPage` in place of the real `WebPage`. Consider:
+
+- Where do you reference `WebPage`?
+- How can you control what class is referenced differently when running tests? Perhaps you could configure the test environment differently from other environments?
+
+---
+
+Update the `title` method of `Link` to accept an injected library as an optional argument:
 
 ```Diff
  # in app/models/link.rb
@@ -689,6 +704,8 @@ This does not fix the failing tests, but an important seam now exists. You can c
 ```
 
 Huzzah! All tests pass. Now your test suite configures the application to use `FakeWebPage`. Before this change, the entire test suite without webmock ran in about **2s**. Now it completes in only **0.3s**! Further, this completely eliminates your tests' dependency on the network! You can now enjoy fast, offline tests. Go ahead and hack on it in planes, trains, and automobiles!
+
+**Note:** If you used other URLs in your acceptance tests, you may have to tweak the expectations to expect page titles based on the behavior of your `FakeWebPage`, e.g. for `iamvery.com` expect `Iamvery` instead of the _actual_ page title `Jay Hayes`.
 
 ---
 
@@ -796,7 +813,7 @@ Replace the Twitter Bootstrap `list-group` with `well`s.
 Then move around the link display by wrapping the title in an `<h3>`, the URL in a `<p>`, and make the delete icon a button with text.
 
 ```diff
-<!-- in app/views/links/_link.html.erb -->
+ <!-- in app/views/links/_link.html.erb -->
  <div class="well" data-link-id=<%= link.id %>>
 -  <%= link.title %>
 -  <%= link_to link.url, link.url %>
