@@ -517,7 +517,7 @@ Finally, replace the direct use of `OpenGraph` with `WebPage` in your `Link` mod
  end
 ```
 
-This isolates your app code from direct reference to the 3rd party. In fact, `WebPage` itself has the _only_ reference to `OpenGraph` in your code.
+This isolates your app code from direct reference to the 3rd party. In fact, `WebPage` itself has the _only_ reference to `OpenGraph` in your code. This isolation is tremendously useful. Imagine creating a wrapper for processing payments with [Stripe](https://stripe.com/). If later you decide to change payment processing to [Braintree](https://www.braintreepayments.com/), the entirety of the change is isolated to the implementation of your wrapper!
 
 ---
 
