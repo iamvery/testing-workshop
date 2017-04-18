@@ -713,6 +713,7 @@ Huzzah! All tests pass. Now your test suite configures the application to use `F
 ### 👂 _LISTEN!_
 
 - Finish the implementation.
+- Illustrate drawback of dynamic typing.
 
 ---
 
