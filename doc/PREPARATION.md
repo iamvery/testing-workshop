@@ -94,7 +94,7 @@ And that just about does it. As the interface suggests, you can also delete link
 
 You are now all set for the workshop _Feature. Tests. Implementation._ As you might have guessed, you will be adding to the understated simplicity of Pinster by building a new feature with tests! I can't wait to see you there 🙂.
 
-[latest-release]: https://github.com/iamvery/rc17-testing-workshop/releases/tag/v1
+[latest-release]: https://github.com/iamvery/testing-workshop/releases/tag/v1
 [rspec]: http://rspec.info/
 [local]: http://localhost:3000
 [phantomjs]: https://github.com/teampoltergeist/poltergeist#installing-phantomjs
