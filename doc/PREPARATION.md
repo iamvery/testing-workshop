@@ -18,6 +18,14 @@ It is assumed that you have a modern version of Ruby installed on your system. T
 
 If you need assistance installing Ruby, check out the information available at https://www.ruby-lang.org/en/documentation/installation/.
 
+Make sure you have the `bundler` gem installed.
+
+```
+$ gem install bundler
+```
+
+[Bundler](http://bundler.io/) is used to install Ruby packages, [Rubygems](https://rubygems.org/).
+
 ## SQlite3
 
 The app you will be using during the workshop uses a SQlite3 database. SQlite is not a production-ready database, but it is relatively easy to configure and is available by default on macOS. If you are unsure whether you have SQlite3 installed, you might just try completing this guide. If you run into any problems bundling or setting up the database, there is a good article for configuring SQlite3 on your system at http://mislav.net/rails/install-sqlite3/.
