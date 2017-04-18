@@ -114,11 +114,11 @@ Fundamentally, this feature is about _viewing_ links, so it probably fits best i
 +
 +    expect(page).to have_content("Twitter")
 +    expect(page).to have_content("Google")
-+  end 
++  end
  end
 ```
 
-Nice! That test cleanly summarizes an acceptable scenario for the feature you are adding. Note the similarty is has to the other test in this context.
+Nice! That test cleanly summarizes an acceptable scenario for the feature you are adding. Note the similarity is has to the other test in this context.
 
 - Given: a link to Twitter and a link to Google exist in the app.
 - When: the user views the links.
@@ -291,7 +291,7 @@ That works well enough! Use this library to complete the implementation of `Link
 
 Replace the naive implementation by using the `opengraph_parser` library. This should be a very small change.
 
-With the library utilitized, run the entire suite with `bin/rspec`. Does it all pass? Are there any drawbacks to this implementation?
+With the library utilized, run the entire suite with `bin/rspec`. Does it all pass? Are there any drawbacks to this implementation?
 
 ---
 
@@ -417,10 +417,10 @@ RSpec.describe WebPage do
   describe "#title" do
     it "returns the fetched page title" do
       url = "http://google.com"
-      
+
       page = described_class.new(url)
       title = page.title
-      
+
       expect(title).to eq("Google")
     end
   end
@@ -437,15 +437,15 @@ class WebPage
   def initialize(url)
     @url = url
   end
-  
+
   def title
     open_graph.title
   end
-  
+
   private
-  
+
   attr_reader :url
-  
+
   def open_graph
     @open_graph ||= OpenGraph.new(url)
   end
@@ -454,7 +454,7 @@ end
 
 
 
-Run the the new spec. What do you expect will happen?
+Run the new spec. What do you expect will happen?
 
 ```
 $ bin/rspec
@@ -483,10 +483,10 @@ Webmock will match as much or as little of the information as you give it about 
 +  body = "<html><head><title>Google</title></head></html>"
 +
 +  stub_request(:get, url).to_return(body: body)
-      
+
    page = WebPage.new(url)
    title = page.title
-      
+
    expect(title).to eq("Google")
  end
  # ...
@@ -649,7 +649,7 @@ With this small change, you can already start the process of decoupling by elimi
 ```diff
  # in spec/models/link_spec.rb
 +require "fake_web_page"
- 
+
  # ...
    describe "#title" do
      it "returns the page title" do
@@ -691,7 +691,7 @@ Now you can update the Link#title method to inject this configuration rather tha
  end
 ```
 
-This does not fix the failing tests, but an important seam now exists. You can change the Rails conguration to specify _anything_ you want to be used for the web page lib! Update your test environment to always use the test fake:
+This does not fix the failing tests, but an important seam now exists. You can change the Rails configuration to specify _anything_ you want to be used for the web page lib! Update your test environment to always use the test fake:
 
 ```diff
  # in spec/rails_helper.rb
@@ -747,16 +747,16 @@ Nokogiri is an XML parser, so it's well-suited to dig into an HTML document. A q
    def initialize(url)
      @url = url
    end
-  
+
    def title
 -    open_graph.title
 +    page.css("title").text
    end
-  
+
    private
-  
+
    attr_reader :url
-  
+
 -  def open_graph
 -    @open_graph ||= OpenGraph.new(url)
 -  end
@@ -770,7 +770,7 @@ Nokogiri is an XML parser, so it's well-suited to dig into an HTML document. A q
 end
 ```
 
-That's it! A true _refactor_. The entire test suite is still green. Being careful about coupling in your test suite gives you the flexibility to make unforseen changes with relatively little pain.
+That's it! A true _refactor_. The entire test suite is still green. Being careful about coupling in your test suite gives you the flexibility to make unforeseen changes with relatively little pain.
 
 ---
 
@@ -841,7 +841,7 @@ Finished in 0.39228 seconds (files took 1.81 seconds to load)
 7 examples, 0 failures
 ```
 
-This is another example of consider test implementation that minimizes uneccessary coupling.
+This is another example of consider test implementation that minimizes unnecessary coupling.
 
 ---
 
@@ -880,7 +880,7 @@ describe "#title" do
   it "delegates to the OpenGraph instance for its title" do
     page = described_class.new(url, lib: lib)
     expect(instance).to receive(:page_title)
-    page.title    
+    page.title
   end
 end
 ```
@@ -909,17 +909,17 @@ RSpec.describe WebPage do
   let(:url) { "http://example.com" }
   let(:lib) { double(:open_graph_class) }
   let(:instance) { double(:open_graph_instance) }
-  
+
   before do
     allow(lib).to receive(:new).with(url).and_return(instance)
   end
-  
+
   describe "#title" do
-  	it "delegates to the OpenGraph instance for its title" do
-  	  page = described_class.new(url, lib: lib)
-  	  expect(instance).to receive(:page_title)
-      page.title    
-  	end
+    it "delegates to the OpenGraph instance for its title" do
+      page = described_class.new(url, lib: lib)
+      expect(instance).to receive(:page_title)
+      page.title
+    end
   end
 end
 ```
@@ -935,15 +935,15 @@ class WebPage
     @url = url
     @lib = lib
   end
-  
+
   def title
     open_graph.page_title
   end
-  
+
   private
-  
+
   attr_reader :url, :lib
-  
+
   def open_graph
     @open_graph ||= lib.new(url)
   end
@@ -960,7 +960,7 @@ The mistake is only caught after running the app and using it in your browser. I
 
 We made an inaccurate assumption about the `OpenGraph` interface. It doesn't respond to `page_title` 🤦‍♂️.
 
-The point of this drawn-out exercise is to highlight a major drawback of using mocks and stubs to "isolate" tests. If you are not careful, you might lull youself into a false sense of security that feels fine right up until everything is terrible. Of course, this is not to say that mocks and stubs are _evil_ and should never be used. Like all things, they're tools that can both build a house and severe limbs.
+The point of this drawn-out exercise is to highlight a major drawback of using mocks and stubs to "isolate" tests. If you are not careful, you might lull yourself into a false sense of security that feels fine right up until everything is terrible. Of course, this is not to say that mocks and stubs are _evil_ and should never be used. Like all things, they're tools that can both build a house and severe limbs.
 
 #### Verifying Mocks
 
@@ -998,7 +998,7 @@ Finally, update spec and implementation to fix the erroneous message:
    page = described_class.new(url, lib: lib)
 -  expect(instance).to receive(:page_title)
 +  expect(instance).to receive(:title)
-   page.title    
+   page.title
  end
 ```
 
@@ -1030,7 +1030,7 @@ The new spec for `WebPage` is _significantly more coupled_ to `OpenGraph`. The e
 
 ## Conclusion
 
-As you have seen through this workshop, there are many imporant decisions to be made while implementing even a small feature. Perhaps you have thought "this took a lot longer then just building the feature". Yes, however, you feature is securely covered by a set of tests that ensure it behaves correctly. This gives you the confidence to deliver it to your client knowing that it works. If it ends up being unacceptable for them, it provides you with a starting point for modeling what they want to begin making changes. No doubt, testing is an investment, but all good investments reward you in the long run.
+As you have seen through this workshop, there are many important decisions to be made while implementing even a small feature. Perhaps you have thought "this took a lot longer then just building the feature". Yes, however, you feature is securely covered by a set of tests that ensure it behaves correctly. This gives you the confidence to deliver it to your client knowing that it works. If it ends up being unacceptable for them, it provides you with a starting point for modeling what they want to begin making changes. No doubt, testing is an investment, but all good investments reward you in the long run.
 
 [rspec]: http://rspec.info/
 [rspec-book]: https://pragprog.com/book/rspec3/effective-testing-with-rspec-3
