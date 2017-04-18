@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+bundle package --all-platforms
+zip --recurse-paths tmp/pinster.zip . --exclude .bundle/\* .git/\* log/\* tmp/\* .DS_Store .byebug_history db/\*.sqlite3

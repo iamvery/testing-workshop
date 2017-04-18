@@ -1,3 +1,3 @@
-# TDD: From feature to tests to implementation
+# Feature. Tests. Implementation.
 
 Testing workshop presented at http://railsconf.com 2017.
