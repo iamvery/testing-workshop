@@ -396,6 +396,7 @@ end
 ```Ruby
 # in lib/web_page.rb
 class WebPage
+  # YOUR IMPLEMENTATION HERE
 end
 ```
 
@@ -429,6 +430,7 @@ end
 Iterate by running the test and adding code to complete the implementation of `WebPage`.
 
 ```ruby
+# in lib/web_page.rb
 require "open_graph"
 
 class WebPage
@@ -557,7 +559,6 @@ end
 
 ```Ruby
 # in lib/fake_web_page.rb
-
 class FakeWebPage
   # YOUR IMPLEMENTATION HERE
 end
@@ -736,6 +737,7 @@ Did you notice that the dependency on `OpenGraph` is entirely an implementation 
 Nokogiri is an XML parser, so it's well-suited to dig into an HTML document. A quick refactor does the job:
 
 ```diff
+ # in lib/web_page.rb
 -require "open_graph"
 +require "open-uri"
 +require "nokogiri"
@@ -924,6 +926,7 @@ end
  And implementation:
 
 ```ruby
+# in lib/web_page.rb
 require "open_graph"
 
 class WebPage
