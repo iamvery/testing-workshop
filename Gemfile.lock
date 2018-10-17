@@ -192,7 +192,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (2.3.2)
+    webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -212,7 +212,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   listen (~> 3.0.5)
-  opengraph_parser (~> 0.2)
+  opengraph_parser
   poltergeist
   puma
   rails (~> 5.0)
@@ -223,7 +223,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (~> 3.3)
-  webmock (~> 2.3)
+  webmock
 
 BUNDLED WITH
    1.16.5
