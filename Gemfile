@@ -29,7 +29,7 @@ gem 'redis', '~> 3.0'
 # gem 'capistrano-rails', group: :development
 
 # Dependency unused, but pre-installed for workshop example
-gem 'opengraph_parser', '~> 0.2'
+gem 'opengraph_parser'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -45,8 +45,7 @@ end
 group :test do
   gem "capybara" # acceptance test framework
   gem "rspec-rails"
-  gem "poltergeist" # headless web driver integrating capybara with PhantomJS
-  gem "webmock", "~> 2.3"
+  gem "webmock"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
