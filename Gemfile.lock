@@ -55,7 +55,6 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.1)
-    cliver (0.3.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -105,10 +104,6 @@ GEM
     opengraph_parser (0.2.3)
       addressable
       nokogiri
-    poltergeist (1.18.1)
-      capybara (>= 2.1, < 4)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.5)
@@ -213,7 +208,6 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   opengraph_parser
-  poltergeist
   puma
   rails (~> 5.0)
   redis (~> 3.0)

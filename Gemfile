@@ -45,7 +45,6 @@ end
 group :test do
   gem "capybara" # acceptance test framework
   gem "rspec-rails"
-  gem "poltergeist" # headless web driver integrating capybara with PhantomJS
   gem "webmock"
 end
 
