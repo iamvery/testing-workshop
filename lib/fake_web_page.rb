@@ -1,0 +1,3 @@
+class FakeWebPage
+  # TODO
+end
