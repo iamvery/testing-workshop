@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', "~> 5.0"
+gem 'rails'
 
 # Use SQlite as the database for Active Record
 gem 'sqlite3'

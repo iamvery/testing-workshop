@@ -213,7 +213,7 @@ DEPENDENCIES
   listen
   opengraph_parser
   puma
-  rails (~> 5.0)
+  rails
   redis
   rspec-rails
   sass-rails
