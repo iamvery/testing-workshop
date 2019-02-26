@@ -276,7 +276,7 @@ The [Open Graph Protocol][ogp] defines a way of relaying page information as a p
 Confirm `gem "opengraph_parser"` is in your `Gemfile` and installed. Play around with it in the Rails console to see how it works:
 
 ```
-$ bin/rails console
+$ rails console
 irb> page = OpenGraph.new("http://google.com")
 => #<OpenGraph...>
 irb> page.title
