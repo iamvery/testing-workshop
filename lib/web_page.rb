@@ -1,0 +1,3 @@
+class WebPage
+  # TODO
+end

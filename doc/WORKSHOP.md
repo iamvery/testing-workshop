@@ -79,7 +79,7 @@ That sounds useful. Make it so.
 
 ## Your First Test
 
-With any clearly defined user story, the first test you write is an _**acceptance**_ test. This is the so-called "highest level" test that you will write, and although it is the first one written, it is likely to be the _last_ one passing. The passing of this test is an indication that your feature _might_ be done. Any time the acceptance tests pass, it is time to consider refactoring your implementation.
+With any clearly defined user story, the first test you write is an _**acceptance**_ test. This is the so-called "highest level" test that you will write, and although it is the first one written, it is likely to be the _last_ one passing. The passing of this test is an indication that your feature _might_ be done. Any time the acceptance tests pass, it is time to consider refactoring your implementation. Red. Green. Refactor.
 
 ---
 
@@ -1030,7 +1030,7 @@ The new spec for `WebPage` is _significantly more coupled_ to `OpenGraph`. The e
 
 ## Conclusion
 
-As you have seen through this workshop, there are many important decisions to be made while implementing even a small feature. Perhaps you have thought "this took a lot longer then just building the feature". Yes, however, you feature is securely covered by a set of tests that ensure it behaves correctly. This gives you the confidence to deliver it to your client knowing that it works. If it ends up being unacceptable for them, it provides you with a starting point for modeling what they want to begin making changes. No doubt, testing is an investment, but all good investments reward you in the long run.
+As you have seen through this workshop, there are many important decisions to be made while implementing even a small feature. Perhaps you have thought "this took a lot longer then just building the feature". Yes, however, your feature is securely covered by a set of tests that ensure it behaves correctly and support the flexibilty to change the underlying implementation. This gives you the confidence to deliver it to your client knowing that it works. If it ends up being unacceptable for them, it provides you with a starting point for modeling what they want to begin making changes. No doubt, testing is an investment, but all good investments reward you in the long run.
 
 [rspec]: http://rspec.info/
 [rspec-book]: https://pragprog.com/book/rspec3/effective-testing-with-rspec-3
