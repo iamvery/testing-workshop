@@ -8,7 +8,6 @@ Take a few moments to prepare your system for the workshop. In this guide, you w
 
 - Install [Ruby](#ruby) (v2.1 or higher)
 - Install [SQlite3](#sqlite3)
-- Install [PhantomJS](#phantomjs)
 - Download [app source code](#pinster) ([pinster.zip][latest-release])
 - [Verify](#verify-the-things) setup with `bin/rspec`
 
